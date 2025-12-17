@@ -11,5 +11,5 @@
         </div>
         <button type="submit" name="action" value="login" class="btn btn-primary">Iniciar sesión</button>
     </form>
-    <a href="index.php?page=registerUser">¿No tienes una cuenta? Regístrate aquí</a>
+    <a href="/proyectofp/public/register">¿No tienes una cuenta? Regístrate aquí</a>
 </div>

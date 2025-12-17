@@ -15,6 +15,11 @@
     <?php include "../app/templates/header.php" ?>
     <main class="container">
         <?php
+        echo "
+            <pre>";
+        var_dump($_SERVER['REQUEST_URI']);
+        var_dump($_GET);
+        echo "</pre>";
 
         if (!empty($_SESSION['contentAlert'])) {
             $msg = $_SESSION['contentAlert'];
@@ -41,12 +46,10 @@
         $page = "home";
         //Comprueba si hay un page en la url y, además, comprueba si existe ese archivo en el directorio
         //Esto hará que si se intenta navegar a otra page que no tenemos, nos rediriga a "home"
-        if (isset($_REQUEST['page']) && is_file('../app/pages/' . $_REQUEST['page'] . ".php")) {
-            $page = $_REQUEST['page'];
-        } else {
-            //De no existir, nos devuelve a home
-            $page = "home";
+        if (isset($_GET['page']) && is_file('../app/pages/' . $_GET['page'] . ".php")) {
+            $page = $_GET['page'];
         }
+        var_dump($_GET);
         require "../app/pages/" . $page . ".php";
         ?>
     </main>

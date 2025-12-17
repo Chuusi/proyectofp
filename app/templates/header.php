@@ -8,7 +8,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="./index.php">Inicio</a>
+                        <a class="nav-link" href="/proyectofp/public/home">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Crear tabla</a>
@@ -29,7 +29,7 @@
 
                 </div>
             <?php else: ?>
-                <a class="nav-link" href="index.php?page=login">Iniciar sesión</a>
+                <a class="nav-link" href="/proyectofp/public/login">Iniciar sesión</a>
             <?php endif; ?>
         </div>
     </nav>

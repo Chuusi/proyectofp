@@ -1,0 +1,9 @@
+RewriteEngine On
+
+
+#Páginas para redirigir a login y register cuando encuentre /login o /register
+RewriteRule ^login$ index.php?page=login [NC]
+RewriteRule ^register$ index.php?page=registerUser [NC]
+
+#Página genérica, pasa al valor "page" la cadena encontrada en la ruta
+RewriteRule ^([a-z]+)$ index.php?page=$1 [NC]

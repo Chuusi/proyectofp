@@ -1,5 +1,5 @@
 <?php
-//Este archivo sirve de pueden entre el front y el back sin contener lógica de negocio
+//Este archivo sirve de puente entre el front y el back sin contener lógica de negocio
 require_once __DIR__ . '/../app/controllers/UserController.php';
 
 //Corta el acceso si el método requerido no es POST
