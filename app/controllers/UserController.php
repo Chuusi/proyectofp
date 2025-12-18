@@ -1,7 +1,10 @@
 <?php
-//Iniciamos la sesión y requerimos el modelo antes de crear el controlador
-session_start();
-require_once __DIR__ . '/../models/User.php';
+
+namespace App\Controllers;
+
+//Requerimos el modelo antes de crear el controlador
+use App\Models\User;
+
 class UserController
 {
     private $userModel;
@@ -95,6 +98,7 @@ class UserController
     //Cerrar sesión
     public function logout()
     {
+        session_start();
         try {
             //Quita la variable "user" de la sesión.
             unset($_SESSION['user']);
@@ -108,8 +112,19 @@ class UserController
 
             //Indica que se cierre la sesión al index, para que, primero, muestre la alerta
             $_SESSION['logout'] = true;
-            header("Location: index.php");
+            header("Location: home");
             exit;
+        } catch (\Throwable $th) {
+            return $th->getMessage();
+        }
+    }
+
+    //Mostrar todos
+    public function showAllUsers()
+    {
+        try {
+            $userList = $this->userModel->findAll();
+            return $userList;
         } catch (\Throwable $th) {
             return $th->getMessage();
         }

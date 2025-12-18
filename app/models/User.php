@@ -1,5 +1,10 @@
 <?php
-require_once __DIR__ . '/../config/database.php';
+
+namespace App\Models;
+
+use App\Config\Database;
+
+//require_once __DIR__ . '/../config/database.php';
 
 class User
 {
@@ -22,5 +27,11 @@ class User
     public function findByName($name)
     {
         return $this->collection->findOne(['name' => $name]);
+    }
+
+    //Buscar todos
+    public function findAll()
+    {
+        return $this->collection->find();
     }
 }

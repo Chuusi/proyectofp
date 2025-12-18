@@ -1,36 +1,44 @@
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="./index.php">CTR</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/proyectofp/public/home">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Crear tabla</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Ver tablas</a>
-                    </li>
-                </ul>
-            </div>
-            <?php if (isset($_SESSION['user'])): ?>
-                <div class="container">
-                    <p class="text-end">Bienvenido, <?= $_SESSION['user']['name'] ?> </p>
-                    <form action="userAction.php" method="post" class="text-end">
-                        <button type="submit" name="action" value="logout" class="btn btn-link text-end">
-                            Cerrar sesión
-                        </button>
-                    </form>
+<?php session_start() ?>
+<!DOCTYPE html>
+<html lang="en">
 
-                </div>
-            <?php else: ?>
-                <a class="nav-link" href="/proyectofp/public/login">Iniciar sesión</a>
-            <?php endif; ?>
-        </div>
-    </nav>
-</header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>Crea tu rutina</title>
+</head>
+
+<body>
+    <?php include(__DIR__ . '/nav.php') ?>
+    <main class="container">
+        <?php
+        echo "
+            <pre>";
+        var_dump($_SERVER['REQUEST_URI']);
+        var_dump($_GET);
+        echo "</pre>";
+
+        if (!empty($_SESSION['contentAlert'])) {
+            $msg = $_SESSION['contentAlert'];
+            echo "
+                <script>
+                    Swal.fire({
+                        icon: '{$msg['icon']}',
+                        title: '{$msg['title']}',
+                        text: '{$msg['text']}'
+                    });
+                </script>
+                ";
+            unset($_SESSION['contentAlert']);
+            //Aquí comprobamos si se ha marcado el valor de logout como true
+            //En caso positivo cerramos la sesión
+            //Nos permite mostrar el mensaje de sweetalert antes de cerrar sesión
+            if (!empty($_SESSION['logout'])) {
+                session_unset();
+                session_destroy();
+            }
+        }
+        ?>

@@ -1,6 +1,11 @@
 <?php
-//Este archivo sirve de puente entre el front y el back sin contener lógica de negocio
-require_once __DIR__ . '/../app/controllers/UserController.php';
+
+//Config posee las variables globales de rutas a controladores y modelos
+include('../app/config/config.php');
+//Autoload se encarga de cargar automáticamente los controladores y modelos que existen
+include('../app/utils/autoload.php');
+
+use App\Controllers\UserController;
 
 //Corta el acceso si el método requerido no es POST
 if ($_SERVER['REQUEST_METHOD'] !== "POST") {
