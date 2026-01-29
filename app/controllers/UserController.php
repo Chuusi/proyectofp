@@ -5,6 +5,8 @@ namespace App\Controllers;
 //Requerimos el modelo antes de crear el controlador
 use App\Models\User;
 
+session_start();
+
 class UserController
 {
     private $userModel;
@@ -20,7 +22,13 @@ class UserController
         try {
             $userExist = $this->userModel->findByName($data['name']);
             if ($userExist) {
-                return "El usuario con ese nombre ya existe";
+                $_SESSION['contentAlert'] = [
+                    'icon' => 'error',
+                    'title' => 'El usuario ya existe',
+                    'text' => 'No se puede crear un usuario con el mismo nombre'
+                ];
+                header("Location: index.php?page=registerUser");
+                exit;
             } else {
                 //Reestructuramos los datos según queramos.
                 //Aquí podemos hacer las comprobaciones o modificaciones deseadas
@@ -30,6 +38,7 @@ class UserController
                     $pass_protected = password_hash($data['password'], PASSWORD_DEFAULT);
                 } else {
                     //Modificamos el mensaje a mostrar con sweetalert
+
                     $_SESSION['contentAlert'] = [
                         'icon' => 'error',
                         'title' => 'Fallo',
@@ -67,7 +76,7 @@ class UserController
             if ($userExist) {
                 //Comprueba si la contraseña coincide con la almacenada de manera segura
                 if (password_verify($data['password'], $userExist['password'])) {
-                    session_start();
+
                     $_SESSION['user'] = [
                         'id' => (string) $userExist['_id'],
                         'name' => $userExist['name']
@@ -77,20 +86,30 @@ class UserController
                         'title' => 'Bienvenid@ ' . $userExist['name'],
                         'text' => 'Sesión iniciada correctamente'
                     ];
-                    header("Location: index.php");
+                    header("Location: home");
                     exit;
                 } else {
-                    session_start();
+
                     $_SESSION['contentAlert'] = [
                         'icon' => 'error',
                         'title' => 'Contraseña',
                         'text' => 'La contraseña es incorrecta'
                     ];
-                    header("Location: index.php?page=login");
+                    header("Location: login");
                     exit;
                 }
+            } else {
+
+                $_SESSION['contentAlert'] = [
+                    'icon' => 'error',
+                    'title' => 'Usuario',
+                    'text' => 'El usuario no existe'
+                ];
+                header("Location: login");
+                exit;
             }
         } catch (\Throwable $th) {
+            header("Location: home");
             return $th->getMessage();
         }
     }
@@ -98,20 +117,20 @@ class UserController
     //Cerrar sesión
     public function logout()
     {
-        session_start();
-        try {
-            //Quita la variable "user" de la sesión.
-            unset($_SESSION['user']);
 
+        try {
             //Alerta por sweetalert
             $_SESSION['contentAlert'] = [
                 'icon' => 'warning',
                 'title' => '¡Hasta la próxima!',
                 'text' => 'Sesión cerrada correctamente'
             ];
+            //Quita la variable "user" de la sesión.
+            unset($_SESSION['user']);
 
-            //Indica que se cierre la sesión al index, para que, primero, muestre la alerta
-            $_SESSION['logout'] = true;
+            //Por seguridad regeneramos el id de la sesión, no vamos a cerrarla
+            session_regenerate_id(true);
+
             header("Location: home");
             exit;
         } catch (\Throwable $th) {

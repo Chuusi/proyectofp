@@ -8,19 +8,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/proyectofp/public/home">Inicio</a>
+                        <a class="nav-link" href="/proyectofp/public/home" style="white-space: nowrap;">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/proyectofp/public/createExercice">Crear ejercicio</a>
+                        <a class="nav-link" href="/proyectofp/public/createExercice" style="white-space: nowrap;">Crear ejercicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/proyectofp/public/tables">Ver ejercicios</a>
+                        <a class="nav-link" href="/proyectofp/public/exercices" style="white-space: nowrap;">Ver ejercicios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/proyectofp/public/tables">Crear tabla</a>
+                        <a class="nav-link" href="/proyectofp/public/tables" style="white-space: nowrap;">Crear tabla</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/proyectofp/public/users">Ver tablas</a>
+                        <a class="nav-link" href="/proyectofp/public/users" style="white-space: nowrap;">Ver tablas</a>
                     </li>
                 </ul>
             </div>

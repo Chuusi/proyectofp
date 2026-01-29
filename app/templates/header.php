@@ -1,4 +1,3 @@
-<?php session_start() ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,37 +7,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="style.css">
     <title>Crea tu rutina</title>
 </head>
 
 <body>
-    <?php include(__DIR__ . '/nav.php') ?>
+    <?php
+    include(__DIR__ . '/../utils/contentAlert.php');
+    include(__DIR__ . '/nav.php');
+    ?>
     <main class="container">
-        <?php
-        echo "
-            <pre>";
-        var_dump($_SERVER['REQUEST_URI']);
-        var_dump($_GET);
-        echo "</pre>";
-
-        if (!empty($_SESSION['contentAlert'])) {
-            $msg = $_SESSION['contentAlert'];
-            echo "
-                <script>
-                    Swal.fire({
-                        icon: '{$msg['icon']}',
-                        title: '{$msg['title']}',
-                        text: '{$msg['text']}'
-                    });
-                </script>
-                ";
-            unset($_SESSION['contentAlert']);
-            //Aquí comprobamos si se ha marcado el valor de logout como true
-            //En caso positivo cerramos la sesión
-            //Nos permite mostrar el mensaje de sweetalert antes de cerrar sesión
-            if (!empty($_SESSION['logout'])) {
-                session_unset();
-                session_destroy();
-            }
-        }
-        ?>
