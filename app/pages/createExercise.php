@@ -1,4 +1,4 @@
-<h1 class="text-center">CREACIÓN DE EJERCICIO</h1>
+<h1 class="text-center">Añadir nuevo ejercicio</h1>
 <?php
 //Avisamos que es necesario estar logueado para crear un ejercicio
 if (!isset($_SESSION['user'])):
@@ -37,5 +37,5 @@ endif;
         <option value="3">Core</option>
         <option value="4">Varios</option>
     </select>
-    <button type="submit" name="action" class="btn btn-primary" value="createExercice">Crear</button>
+    <button type="submit" name="action" class="btn btn-primary" value="createExercise">Crear</button>
 </form>

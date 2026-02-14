@@ -1,22 +1,38 @@
 <?php
 
-use App\Controllers\ExerciceController;
-
-// Verificar autenticación
-if (!isset($_SESSION['user'])) {
-    header('Location: login');
-    exit;
-}
+use App\Controllers\ExerciseController;
 
 // Obtener ejercicios de la base de datos
-$exerciseController = new ExerciceController();
-$exercises = $exerciseController->getAllExercises();
+$exerciseController = new ExerciseController();
+$exercises = [];
+$exercises_json = $exerciseController->getAllExercises();
+foreach ($exercises_json as $ex) {
+    $exercises[] = json_decode(json_encode($ex), true);
+}
+
+// Función para asignar estilos según el grupo muscular
+function styleFromGroup($group)
+{
+    switch ($group) {
+        case '1':
+            return 'style="border-left: 4px solid #007bff;"';
+        case '2':
+            return 'style="border-left: 4px solid #28a745;"';
+        case '3':
+            return 'style="border-left: 4px solid #ffc107;"';
+        case '4':
+            return 'style="border-left: 4px solid #6c757d;"';
+        default:
+            return '';
+    }
+}
+
 ?>
 
 
 
 <div class="container mt-4">
-    <h1 class="mb-4">Lista de Ejercicios</h1>
+    <h1 class="mb-4 text-center">Lista de Ejercicios</h1>
 
     <?php if (empty($exercises)): ?>
         <div class="alert alert-info">
@@ -26,31 +42,40 @@ $exercises = $exerciseController->getAllExercises();
         <div class="row g-4">
             <?php foreach ($exercises as $exercise): ?>
                 <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm">
+                    <div class="card h-100 shadow-sm"
+                        <?php
+                        // Asigna colores al borde según el grupo muscular
+                        echo styleFromGroup($exercise['group']);
+                        ?>>
                         <div class="card-body d-flex flex-column justify-content-between">
                             <div class="h-100 d-flex flex-column justify-content-between">
                                 <h5 class="card-title">
-                                    <?= htmlspecialchars($exercise['name']) ?>
+                                    <?= $exercise['name'] ?>
                                 </h5>
                                 <p class="card-text">
-                                    <?= htmlspecialchars($exercise['description']) ?>
+                                    <?= $exercise['description'] ?>
                                 </p>
                                 <ul class="list-group list-group-flush mb-3">
                                     <li class="list-group-item d-flex justify-content-between">
                                         <span>Series</span>
                                         <span class="fw-bold">
-                                            <?= htmlspecialchars($exercise['series']) ?>
+                                            <?= $exercise['series'] ?>
                                         </span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between">
                                         <span>Repeticiones</span>
                                         <span class="fw-bold">
-                                            <?= htmlspecialchars($exercise['reps']) ?>
+                                            <?= $exercise['reps'] ?>
                                         </span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between">
                                         <span>Grupo</span>
-                                        <span class="badge bg-secondary">
+                                        <span class="badge bg-secondary"
+                                            <?php
+
+                                            echo styleFromGroup($exercise['group']);
+
+                                            ?>>
                                             <?php
                                             switch ($exercise['group']) {
                                                 case '1':
@@ -73,12 +98,21 @@ $exercises = $exerciseController->getAllExercises();
                                     </li>
                                 </ul>
                             </div>
-
-                            <div class="d-flex gap-2">
-                                <a href="#" class="btn btn-sm btn-outline-primary">Editar</a>
-                                <a href="#" class="btn btn-sm btn-outline-danger">Eliminar</a>
-                            </div>
-
+                            <?php
+                            if (isset($_SESSION['user'])): ?>
+                                <div class="d-flex gap-2">
+                                    <a href="/proyectofp/public/editExercise?name=<?= $exercise['name'] ?>" class="btn btn-sm btn-outline-primary">Editar</a>
+                                    <form action="userAction.php" method="post" class="d-inline">
+                                        <input type="hidden" name="name" value="<?= $exercise['name'] ?>">
+                                        <button
+                                            type="submit"
+                                            onclick="return confirm('¿Estás seguro de que deseas eliminar este ejercicio? Se eliminará de la base de datos.')"
+                                            class="btn btn-sm btn-outline-danger"
+                                            name="action"
+                                            value="deleteExercise">Eliminar</button>
+                                    </form>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

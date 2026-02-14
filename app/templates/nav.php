@@ -11,13 +11,13 @@
                         <a class="nav-link" href="/proyectofp/public/home" style="white-space: nowrap;">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/proyectofp/public/createExercice" style="white-space: nowrap;">Crear ejercicio</a>
+                        <a class="nav-link" href="/proyectofp/public/createExercise" style="white-space: nowrap;">Crear ejercicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/proyectofp/public/exercices" style="white-space: nowrap;">Ver ejercicios</a>
+                        <a class="nav-link" href="/proyectofp/public/exercises" style="white-space: nowrap;">Ver ejercicios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/proyectofp/public/tables" style="white-space: nowrap;">Crear tabla</a>
+                        <a class="nav-link" href="/proyectofp/public/createTables" style="white-space: nowrap;">Crear tabla</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/proyectofp/public/users" style="white-space: nowrap;">Ver tablas</a>

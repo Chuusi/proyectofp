@@ -6,7 +6,7 @@ use App\Config\Database;
 
 //require_once __DIR__ . '/../config/database.php';
 
-class Exercice
+class Exercise
 {
     private $collection;
 
@@ -33,5 +33,18 @@ class Exercice
     public function findAll()
     {
         return $this->collection->find();
+    }
+
+    public function update($name, $data)
+    {
+        return $this->collection->updateOne(
+            ['name' => $name],
+            ['$set' => $data]
+        );
+    }
+
+    public function delete($name)
+    {
+        return $this->collection->deleteOne(['name' => $name]);
     }
 }

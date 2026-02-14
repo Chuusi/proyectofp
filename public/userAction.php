@@ -6,7 +6,7 @@ include('../app/config/config.php');
 include('../app/utils/autoload.php');
 
 use App\Controllers\UserController;
-use App\Controllers\ExerciceController;
+use App\Controllers\ExerciseController;
 
 //Corta el acceso si el método requerido no es POST
 if ($_SERVER['REQUEST_METHOD'] !== "POST") {
@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] !== "POST") {
 }
 
 $userController = new UserController();
-$exerciceController = new ExerciceController();
+$exerciseController = new ExerciseController();
 
 //Llama a la acción del controller requerida dependiendo de la acción
 switch ($_POST['action'] ?? "") {
@@ -27,8 +27,14 @@ switch ($_POST['action'] ?? "") {
     case 'logout':
         $userController->logout();
         break;
-    case 'createExercice':
-        $exerciceController->createExercice($_POST);
+    case 'createExercise':
+        $exerciseController->createExercise($_POST);
+        break;
+    case 'editExercise':
+        $exerciseController->editExercise($_POST);
+        break;
+    case 'deleteExercise':
+        $exerciseController->deleteExercise($_POST);
         break;
     default:
         $result = "Acción no válida";
