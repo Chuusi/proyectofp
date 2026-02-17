@@ -7,6 +7,7 @@ include('../app/utils/autoload.php');
 
 use App\Controllers\UserController;
 use App\Controllers\ExerciseController;
+use App\Controllers\TableController;
 
 //Corta el acceso si el método requerido no es POST
 if ($_SERVER['REQUEST_METHOD'] !== "POST") {
@@ -15,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] !== "POST") {
 
 $userController = new UserController();
 $exerciseController = new ExerciseController();
+$tableController = new TableController();
 
 //Llama a la acción del controller requerida dependiendo de la acción
 switch ($_POST['action'] ?? "") {
@@ -35,6 +37,15 @@ switch ($_POST['action'] ?? "") {
         break;
     case 'deleteExercise':
         $exerciseController->deleteExercise($_POST);
+        break;
+    case 'createPreviewTable':
+        $response = $tableController->createPreviewTable($_POST);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($response);
+        exit;
+        break;
+    case 'saveTable':
+        $tableController->saveTable($_POST);
         break;
     default:
         $result = "Acción no válida";

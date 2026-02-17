@@ -4,8 +4,6 @@ namespace App\Models;
 
 use App\Config\Database;
 
-//require_once __DIR__ . '/../config/database.php';
-
 class Exercise
 {
     private $collection;
@@ -46,5 +44,11 @@ class Exercise
     public function delete($name)
     {
         return $this->collection->deleteOne(['name' => $name]);
+    }
+
+    public function insertMany($data)
+    {
+        $this->collection->drop();
+        return $this->collection->insertMany($data);
     }
 }

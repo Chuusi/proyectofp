@@ -6,7 +6,7 @@ if (!isset($_SESSION['user'])):
 ?>
     <div class="d-flex justify-content-center">
         <span>⚠ --</span>
-        <p class="text-center fst-italic"> Es necesario estar logueado para crear un ejercicio. </p>
+        <p class="text-center fst-italic"> Es necesario estar logueado para crear un ejercicio </p>
         <span>-- ⚠</span>
     </div>
 <?php

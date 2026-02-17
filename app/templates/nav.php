@@ -20,7 +20,7 @@
                         <a class="nav-link" href="/proyectofp/public/createTables" style="white-space: nowrap;">Crear tabla</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/proyectofp/public/users" style="white-space: nowrap;">Ver tablas</a>
+                        <a class="nav-link" href="/proyectofp/public/tables" style="white-space: nowrap;">Ver tablas</a>
                     </li>
                 </ul>
             </div>

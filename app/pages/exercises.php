@@ -10,6 +10,10 @@ foreach ($exercises_json as $ex) {
     $exercises[] = json_decode(json_encode($ex), true);
 }
 
+usort($exercises, function ($a, $b) {
+    return strcmp($a['name'], $b['name']);
+});
+
 // Función para asignar estilos según el grupo muscular
 function styleFromGroup($group)
 {
