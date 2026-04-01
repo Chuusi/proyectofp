@@ -34,6 +34,7 @@ class ExerciseController
                     'text' => 'Debes iniciar sesión para crear un ejercicio'
                 ];
                 header("Location: login");
+                exit;
             } else {
                 //Reestructuramos los datos según queramos.
                 $exerciseData = [
@@ -51,6 +52,7 @@ class ExerciseController
                     'text' => 'Ejercicio creado satisfactoriamente'
                 ];
                 header("Location: exercises");
+                exit;
             }
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -59,12 +61,21 @@ class ExerciseController
 
     public function getAllExercises()
     {
-        return $this->exerciseModel->findAll();
+        $exercises = $this->exerciseModel->findAll();
+        $data = [];
+        foreach ($exercises as $ex) {
+            $data[] = json_decode(json_encode($ex), true);
+        }
+        return $data;
     }
 
     public function getExerciseByName($name)
     {
-        return $this->exerciseModel->findByName($name);
+        $exercise_to_edit_json = $this->exerciseModel->findByName($name);
+        if ($exercise_to_edit_json) {
+            $exercise_to_edit = json_decode(json_encode($exercise_to_edit_json), true);
+        }
+        return $exercise_to_edit ?? null;
     }
 
     public function editExercise($data)
@@ -86,6 +97,7 @@ class ExerciseController
                     'text' => 'Debes iniciar sesión para editar un ejercicio'
                 ];
                 header("Location: login");
+                exit;
             } else {
                 //Reestructuramos los datos según queramos.
                 $exerciseData = [
@@ -102,6 +114,7 @@ class ExerciseController
                     'text' => 'Ejercicio editado satisfactoriamente'
                 ];
                 header("Location: exercises");
+                exit;
             }
         } catch (\Throwable $th) {
             return $th->getMessage();
@@ -127,6 +140,7 @@ class ExerciseController
                     'text' => 'Debes iniciar sesión para eliminar un ejercicio'
                 ];
                 header("Location: login");
+                exit;
             } else {
                 $this->exerciseModel->delete($data['name']);
                 $_SESSION['contentAlert'] = [
@@ -135,6 +149,7 @@ class ExerciseController
                     'text' => 'Ejercicio eliminado satisfactoriamente',
                 ];
                 header("Location: exercises");
+                exit;
             }
         } catch (\Throwable $th) {
             return $th->getMessage();

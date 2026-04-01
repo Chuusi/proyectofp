@@ -4,11 +4,7 @@ use App\Controllers\ExerciseController;
 
 // Obtener ejercicios de la base de datos
 $exerciseController = new ExerciseController();
-$exercises = [];
-$exercises_json = $exerciseController->getAllExercises();
-foreach ($exercises_json as $ex) {
-    $exercises[] = json_decode(json_encode($ex), true);
-}
+$exercises = $exerciseController->getAllExercises();
 
 usort($exercises, function ($a, $b) {
     return strcmp($a['name'], $b['name']);
@@ -25,7 +21,7 @@ function styleFromGroup($group)
         case '3':
             return 'style="border-left: 4px solid #ffc107;"';
         case '4':
-            return 'style="border-left: 4px solid #6c757d;"';
+            return 'style="border-left: 4px solid #693e7e;"';
         default:
             return '';
     }
@@ -35,7 +31,7 @@ function styleFromGroup($group)
 
 
 
-<div class="container mt-4">
+<div class="container my-4">
     <h1 class="mb-4 text-center">Lista de Ejercicios</h1>
 
     <?php if (empty($exercises)): ?>

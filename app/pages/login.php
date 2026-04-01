@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container my-4">
     <h1 class="text-center">Iniciar sesión</h1>
     <form action="userAction.php" method="post">
         <div class="mb-3">

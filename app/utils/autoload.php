@@ -1,4 +1,5 @@
 <?php
+require '../vendor/autoload.php';
 $controllers = glob(CONTROLLERS . '/*.php');
 $models = glob(MODELS . '/*.php');
 

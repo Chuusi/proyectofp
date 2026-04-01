@@ -3,12 +3,7 @@
 use App\Controllers\ExerciseController;
 
 $exerciseController = new ExerciseController();
-$exercise_to_edit = null;
-
-$exercise_to_edit_json = $exerciseController->getExerciseByName($_GET['name'] ?? null);
-if ($exercise_to_edit_json) {
-    $exercise_to_edit = json_decode(json_encode($exercise_to_edit_json), true);
-}
+$exercise_to_edit = $exerciseController->getExerciseByName($_GET['name'] ?? null);
 
 ?>
 
@@ -24,7 +19,7 @@ if ($exercise_to_edit_json) {
     }
 </style>
 
-<div class="container mt-4">
+<div class="container my-4">
     <h1 class="text-center">Editando ejercicio "<span class="fw-bold"><?= $exercise_to_edit['name'] ?></span>"</h1>
 
     <form action="userAction.php" method="post" id="editForm">

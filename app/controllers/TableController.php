@@ -14,22 +14,18 @@ class TableController
         $this->tableModel = new Table();
     }
 
-    //Creación de nueva tabla según datos elegidos por el usuario
-    // Tenemos 4 grupos musculares
-    /*     Array
-    (
-    [name] => 
-    [day] => Array
-        (
-            [0] => monday
-            [1] => tuesday
-            [2] => wednesday
-        )
-
-    [exercises_day] => 3
-    [work_method] => same
-    [action] => createTable
-    ) */
+    /**
+     * Crea una vista previa de la tabla de ejercicios según los datos del usuario.
+     * @param array $data Array con claves:
+     *                    - name (string|null) Nombre de la tabla
+     *                    - day (array|null) Días seleccionados (ej. ['monday','tuesday'])
+     *                    - exercises_day (int|null) Número de ejercicios por día
+     *                    - work_method (string|null) 'same' para agrupar por grupo muscular o otro para distribuir
+     * @return array Devuelve un array con:
+     *               - 'table' => array asociativo con días y ejercicios asignados
+     *               - 'allExercises' => array con todos los ejercicios ordenados por nombre
+     * @throws \Throwable Propaga excepciones en caso de error
+     */
     public function createPreviewTable($data)
     {
         try {
@@ -111,6 +107,14 @@ class TableController
         }
     }
 
+    /**
+     * Guarda la tabla de ejercicios en la base de datos
+     * @param array $data Array con claves:
+     *                    - name (string|null) Nombre de la tabla
+     *                    - day (array|null) Días seleccionados (ej. ['monday','tuesday'])
+     *                    - exercises_day (int|null) Número de ejercicios por día
+     *                    - work_method (string|null) 'same' para agrupar por grupo muscular o otro para distribuir
+     */
     public function saveTable($data)
     {
         try {
@@ -136,7 +140,35 @@ class TableController
                 header("Location: tables");
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            throw $th;
         }
+    }
+
+    /**
+     * Devuelve todas las tablas almacenadas en la base de datos
+     */
+    public function getAllTables()
+    {
+        return $this->tableModel->findAll();
+    }
+
+    public function getTableWithExercises($id)
+    {
+        $table = $this->tableModel->getById($id);
+        if (!$table) {
+            return null;
+        }
+
+        $table = json_decode(json_encode($table), true);
+
+        return [
+            "table" => $table['table'] ?? [],
+            "allExercises" => (new ExerciseController())->getAllExercises(),
+            "data" => [
+                "id" => $table['_id']['$oid'] ?? null,
+                "name" => $table['name'] ?? null,
+                "creator" => $table['creator'] ?? null,
+            ]
+        ];
     }
 }
