@@ -8,7 +8,7 @@ $tables = $tableController->getAllTables();
 
 ?>
 
-<div class="container my-4">
+<div class="container my-4 w-75 mx-auto">
     <h1 class="mb-4 text-center">Lista de tablas</h1>
 
     <?php if (empty($tables)): ?>
@@ -44,8 +44,8 @@ $tables = $tableController->getAllTables();
                     <p class="m-auto"><?= $table['creator'] ?></p>
                 </div>
                 <div class="col-2 border-start border-primary-subtle d-flex justify-content-center my-1 gap-2">
-                    <a href="/proyectofp/public/showTable?id=<?= $table['_id']['$oid'] ?>" class="btn btn-sm btn-primary">Ver</a>
-                    <a href="/proyectofp/public/editTable?id=<?= $table['_id']['$oid'] ?>" class="btn btn-sm btn-warning">Editar</a>
+                    <a href="/proyectofp/public/showTable?id=<?= $table['_id']['$oid'] ?>" class="btn btn-sm btn-outline-primary">Ver</a>
+                    <a href="/proyectofp/public/editTable?id=<?= $table['_id']['$oid'] ?>" class="btn btn-sm btn-outline-warning">Editar</a>
                 </div>
             </div>
     <?php

@@ -10,7 +10,7 @@ $tableName = $info['name'] ?? null;
 $creator = $info['creator'] ?? null;
 
 ?>
-<div class="container my-4">
+<div class="container my-4 w-75 mx-auto">
     <h5 class="mb-4 text-center">Creador: <?= $creator ?></h5>
 
     <?php if (empty($table)) { ?>

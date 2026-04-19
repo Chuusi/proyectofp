@@ -19,7 +19,7 @@ $exercise_to_edit = $exerciseController->getExerciseByName($_GET['name'] ?? null
     }
 </style>
 
-<div class="container my-4">
+<div class="container my-4 w-75 mx-auto">
     <h1 class="text-center">Editando ejercicio "<span class="fw-bold"><?= $exercise_to_edit['name'] ?></span>"</h1>
 
     <form action="userAction.php" method="post" id="editForm">

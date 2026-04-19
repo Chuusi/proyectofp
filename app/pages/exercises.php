@@ -31,7 +31,7 @@ function styleFromGroup($group)
 
 
 
-<div class="container my-4">
+<div class="container my-4 w-75 mx-auto">
     <h1 class="mb-4 text-center">Lista de Ejercicios</h1>
 
     <?php if (empty($exercises)): ?>

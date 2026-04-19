@@ -11,9 +11,9 @@
     <title>Crea tu rutina</title>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
     <?php
     include(__DIR__ . '/../utils/contentAlert.php');
     include(__DIR__ . '/nav.php');
     ?>
-    <main class="container">
+    <main class="container flex-grow-1">

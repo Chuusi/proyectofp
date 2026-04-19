@@ -1,4 +1,4 @@
-<div class="container-sm my-4">
+<div class="container-sm my-4 w-75 mx-auto">
     <h1 class="text-center">Registrarse</h1>
     <!-- En el botón, indicamos el nombre acción y el valor que queremos mandarle al userAction.php para decirle
     la acción que tiene que llevar a cabo de entre todas las definidas -->

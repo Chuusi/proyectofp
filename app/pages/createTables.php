@@ -4,7 +4,7 @@ use App\Controllers\TableController;
 use Dom\Document;
 
 ?>
-<div class="my-4">
+<div class="my-4 w-75 mx-auto">
     <h1 class="text-center">Añadir nueva tabla</h1>
     <?php
     //Avisamos que es necesario estar logueado para crear un ejercicio
@@ -29,9 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'createTable')
     ?>
     <form id="createTableForm" action="" method="post">
         <div class="mb-3">
-            <label for="name" class="form-label">Nombre de la tabla</label>
+            <label for="name" class="form-label">
+                <legend>Nombre de la tabla</legend>
+            </label>
             <input type="text" name="name" class="form-control" id="name" placeholder="E.g.: Pierna Lunes y Miércoles">
         </div>
+        <hr>
         <!-- Elección de los días de la semana que se quieren añadir a la tabla -->
         <div class="mb-3">
             <fieldset>
@@ -101,6 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'createTable')
                 </div>
             </fieldset>
         </div>
+        <hr>
         <!-- Elección de la cantidad de ejercicios que se quiere hacer por día -->
         <div class="mb-3">
             <fieldset>
@@ -162,6 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'createTable')
                 </div>
             </fieldset>
         </div>
+        <hr>
         <!-- Elección de la forma de trabajo, bien mismo día diferentes grupos musculares o bien cada día un grupo muscular diferente -->
         <div class="mb-3">
             <fieldset>
@@ -187,7 +192,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'createTable')
                 </div>
             </fieldset>
         </div>
-        <button type="submit" name="action" class="btn btn-primary" value="createPreviewTable">Crear</button>
+        <hr>
+        <button type="submit" name="action" class="btn btn-primary mb-3" value="createPreviewTable">Crear</button>
     </form>
     <div id="previewDiv">
 
