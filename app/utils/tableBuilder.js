@@ -8,12 +8,9 @@ const weekDays = {
     sunday: "Domingo",
 };
 
-function buildTableForm(
-    tableData,
-    allExercises,
-    tableName = null,
-    action = "saveTable",
-) {
+function buildTableForm(params) {
+    const { tableData, allExercises, tableName, action, id = null } = params;
+
     const form = document.createElement("form");
     form.action = "userAction.php";
     form.method = "post";
@@ -29,6 +26,15 @@ function buildTableForm(
     hiddenInput.name = "tableName";
     hiddenInput.value = titleElement.textContent;
     form.appendChild(hiddenInput);
+
+    // Hidden input para el ID
+    if (id) {
+        const idInput = document.createElement("input");
+        idInput.type = "hidden";
+        idInput.name = "id";
+        idInput.value = id;
+        form.appendChild(idInput);
+    }
 
     // Recorrer días
     for (const day in tableData) {
@@ -70,7 +76,7 @@ function buildTableForm(
 
         // Selects por ejercicio
         exercises.forEach((exercise, index) => {
-            const exerciseName = exercise.name || exercise;
+            const exerciseName = exercise["name"] || exercise;
 
             const label = document.createElement("label");
             label.className = "form-label";
@@ -85,8 +91,9 @@ function buildTableForm(
                 if (ex.name === exerciseName) {
                     option.selected = true;
                 }
-                option.value = ex.name;
-                option.textContent = ex.name;
+                option.value = JSON.stringify(ex);
+                option.textContent =
+                    ex.name + " - " + ex.reps + "x" + ex.series;
                 select.appendChild(option);
             });
 

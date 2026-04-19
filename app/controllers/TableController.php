@@ -126,6 +126,12 @@ class TableController
                 ];
                 header("Location: login");
             } else {
+                foreach ($data['table'] as $day => $exercises) {
+                    foreach ($exercises as $index => $exercise) {
+                        $exerciseData = json_decode($exercise, true);
+                        $data['table'][$day][$index] = $exerciseData;
+                    }
+                }
                 $tableData = [
                     "name" => $data['tableName'] ?? null,
                     "creator" => $_SESSION['user']['name'] ?? null,
@@ -149,9 +155,26 @@ class TableController
      */
     public function getAllTables()
     {
-        return $this->tableModel->findAll();
+        $data = $this->tableModel->findAll();
+        $tables = [];
+        foreach ($data as $tb) {
+            $tables[] = json_decode(json_encode($tb), true);
+        }
+        return $tables;
     }
 
+    public function getTableById($id)
+    {
+        $table = $this->tableModel->getById($id);
+        if (!$table) {
+            return null;
+        }
+        return json_decode(json_encode($table), true);
+    }
+
+    /**
+     * Devuelve la información de una tabla específica, así como la lista con todos los ejercicios.
+     */
     public function getTableWithExercises($id)
     {
         $table = $this->tableModel->getById($id);
@@ -160,7 +183,6 @@ class TableController
         }
 
         $table = json_decode(json_encode($table), true);
-
         return [
             "table" => $table['table'] ?? [],
             "allExercises" => (new ExerciseController())->getAllExercises(),
@@ -170,5 +192,79 @@ class TableController
                 "creator" => $table['creator'] ?? null,
             ]
         ];
+    }
+
+    /**
+     * Actualiza una tabla existente con los datos recibidos del usuario
+     * @param string $id ID de la tabla a actualizar
+     * @param array $data Array con datos necesarios para la actualización.
+     */
+    public function updateTable($id, $data)
+    {
+        try {
+            if ($_SESSION['user'] == null) {
+                $_SESSION['contentAlert'] = [
+                    'icon' => 'error',
+                    'title' => 'Fallo',
+                    'text' => 'Debes iniciar sesión para actualizar una tabla'
+                ];
+                header("Location: login");
+            } else {
+                foreach ($data['table'] as $day => $exercises) {
+                    foreach ($exercises as $index => $exercise) {
+                        $exerciseData = json_decode($exercise, true);
+                        $data['table'][$day][$index] = $exerciseData;
+                    };
+                };
+                $dataToUpdate = [
+                    "name" => $data['tableName'] ?? null,
+                    "creator" => $_SESSION['user']['name'] ?? null,
+                    "table" => $data['table'] ?? null,
+                ];
+                $this->tableModel->update($id, $dataToUpdate);
+                $_SESSION['contentAlert'] = [
+                    'icon' => 'success',
+                    'title' => 'Éxito',
+                    'text' => 'Tabla actualizada satisfactoriamente'
+                ];
+                header("Location: tables");
+            }
+        } catch (\Throwable $th) {
+            $_SESSION['contentAlert'] = [
+                'icon' => 'error',
+                'title' => 'Fallo',
+                'text' => 'Error al actualizar la tabla'
+            ];
+            throw $th;
+        }
+    }
+
+    public function deleteTable($id)
+    {
+        try {
+            if ($_SESSION['user'] == null) {
+                $_SESSION['contentAlert'] = [
+                    'icon' => 'error',
+                    'title' => 'Fallo',
+                    'text' => 'Debes iniciar sesión para eliminar una tabla'
+                ];
+                header("Location: login");
+            } else {
+                $this->tableModel->delete($id);
+                $_SESSION['contentAlert'] = [
+                    'icon' => 'success',
+                    'title' => 'Éxito',
+                    'text' => 'Tabla eliminada satisfactoriamente'
+                ];
+                header("Location: tables");
+            }
+        } catch (\Throwable $th) {
+            $_SESSION['contentAlert'] = [
+                'icon' => 'error',
+                'title' => 'Fallo',
+                'text' => 'Error al eliminar la tabla'
+            ];
+            throw $th;
+        }
     }
 }

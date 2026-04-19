@@ -31,4 +31,25 @@ class Table
         $objectId = new ObjectId($id);
         return $this->collection->findOne(['_id' => $objectId]);
     }
+
+    public function update($id, $data)
+    {
+        if (!$id) {
+            throw new \Exception("ID de tabla no proporcionado");
+        }
+        $objectId = new ObjectId($id);
+        return $this->collection->updateOne(
+            ['_id' => $objectId],
+            ['$set' => $data]
+        );
+    }
+
+    public function delete($id)
+    {
+        if (!$id) {
+            throw new \Exception("ID de tabla no proporcionado");
+        }
+        $objectId = new ObjectId($id);
+        return $this->collection->deleteOne(['_id' => $objectId]);
+    }
 }

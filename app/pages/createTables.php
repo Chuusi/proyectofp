@@ -213,9 +213,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'createTable')
                     //De la respuesta, traemos la tabla y todos los ejercicios
                     const table = response.table ?? response;
                     const allExercises = response.allExercises ?? [];
-                    const tableName = formData.get("name") || "Tabla sin nombre";
+                    const tableName = formData.get("name") || "Tabla - " + Date.now();
+                    const params = {
+                        tableData: table,
+                        allExercises: allExercises,
+                        tableName: tableName,
+                        action: 'saveTable',
+                    };
                     previewDiv.innerHTML = "";
-                    previewDiv.appendChild(buildTableForm(table, allExercises, tableName, 'saveTable'));
+                    previewDiv.appendChild(buildTableForm(params));
 
                 })
 

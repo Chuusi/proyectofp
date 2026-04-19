@@ -47,8 +47,16 @@ switch ($_POST['action'] ?? "") {
     case 'saveTable':
         $tableController->saveTable($_POST);
         break;
+    case 'updateTable':
+        $id = $_POST['id'] ?? null;
+        $tableController->updateTable($id, $_POST);
+        break;
+    case 'deleteTable':
+        $id = $_GET['id'] ?? null;
+        $tableController->deleteTable($id);
+        break;
     default:
         $result = "Acción no válida";
-        header("Location: /index.php");
+        header("Location: index.php");
         break;
 }
